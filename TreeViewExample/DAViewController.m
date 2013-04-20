@@ -12,6 +12,8 @@
 @property (strong, nonatomic, readonly) DAPlanetStore *store;
 // <indexPath> => @(YES) or nil.
 @property (strong, nonatomic, readonly) NSMutableDictionary *expandedItems;
+// This cell is reused to calculate cell height based on dynamic text content.
+@property (strong, nonatomic, readonly) DASpanCell *firstCell;
 @end
 
 @implementation DAViewController
@@ -23,6 +25,8 @@
 	NSString *name =  NSStringFromClass(DASpanCell.class);
 	UINib *nib = [UINib nibWithNibName:name bundle:nil];
 	[self.treeView.tableView registerNib:nib forCellReuseIdentifier:SpanningCellUId];
+	
+	_firstCell = [self.treeView.tableView dequeueReusableCellWithIdentifier:SpanningCellUId];
 	
 	_expandedItems = [NSMutableDictionary dictionary];
 	_store = [DAPlanetStore defaultStore];
@@ -72,10 +76,8 @@
 }
 
 - (CGFloat)treeView:(TreeTableView *)treeView heightForItemAtIndexPath:(NSIndexPath *)indexPath {
-	DASpanCell *cell = [treeView.tableView dequeueReusableCellWithIdentifier:SpanningCellUId];
-	
 	DAItem *item = [self.store itemForIndexPath:indexPath];
-	return [cell heightForCellWithItem:item atLevel:indexPath.length];
+	return [self.firstCell heightForCellWithItem:item atLevel:indexPath.length];
 }
 
 @end
