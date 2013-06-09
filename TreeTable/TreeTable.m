@@ -283,22 +283,32 @@
 	return [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
 }
 
+#pragma mark Forwarding to Original DataSource
 
-#pragma mark UITableViewDelegate, -DataSource
-
-#pragma mark Sections & Footers
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	// TODO: Impl Sections & Footers support.
-	return 1;
+- (id)forwardingTargetForSelector:(SEL)selector {
+	if ([self.dataSource respondsToSelector:selector]) {
+		return self.dataSource;
+	}
+	return nil;
 }
+
+- (BOOL)respondsToSelector:(SEL)selector {
+	BOOL responds = [super respondsToSelector:selector];
+	if (responds) {
+		return responds;
+	}
+	
+	return [self.dataSource respondsToSelector:selector];
+}
+
+#pragma mark UITableViewDataSource
 
 #pragma mark Cells
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	_tableView = tableView;
 	
-	// IndexPath==nil:  root items.
+	// IndexPath == nil:  request root items with 'nil' indexPath.
 	NSUInteger totalCount = self.rootItemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:nil];
 	
 	// Calc subitems of expanded items.

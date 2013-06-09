@@ -6,7 +6,12 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TreeTableDataSource;
+@protocol TreeTableDataSource <UITableViewDataSource>
+@required
+- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath;
+- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
 
 @interface TreeTable : NSObject <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet id<TreeTableDataSource> dataSource;
@@ -30,9 +35,3 @@
 - (NSIndexPath *)treeIndexOfRow:(NSUInteger)row;
 @end
 
-
-@protocol TreeTableDataSource <UITableViewDataSource>
-@required
-- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath;
-- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath;
-@end

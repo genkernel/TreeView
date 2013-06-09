@@ -34,6 +34,10 @@
 
 #pragma mark TreeTableDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
 - (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath {
 	return nil != self.expandedItems[indexPath];
 }
