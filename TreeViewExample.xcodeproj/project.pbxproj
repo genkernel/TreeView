@@ -23,12 +23,12 @@
 		184AABA516F111A2008FAF7A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA416F111A2008FAF7A /* Default-568h@2x.png */; };
 		184AABA816F111A2008FAF7A /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA616F111A2008FAF7A /* Main_iPhone.storyboard */; };
 		184AABAE16F111A2008FAF7A /* DAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184AABAD16F111A2008FAF7A /* DAViewController.m */; };
-		184AABB716F12AF2008FAF7A /* TreeTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 184AABB616F12AF2008FAF7A /* TreeTableView.m */; };
 		18A4834316F138D300EA0400 /* Planets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18A4834216F138D300EA0400 /* Planets.plist */; };
 		18A4834716F142CD00EA0400 /* DASpanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4834616F142CD00EA0400 /* DASpanCell.m */; };
 		18A4834916F1430E00EA0400 /* DASpanCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A4834816F1430E00EA0400 /* DASpanCell.xib */; };
 		18A4837316F2803400EA0400 /* DAPlanetStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4837216F2803400EA0400 /* DAPlanetStore.m */; };
 		18A4837616F3154100EA0400 /* DAItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A4837516F3154000EA0400 /* DAItem.m */; };
+		18D0B5861764B19F00F8A399 /* TreeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B5851764B19F00F8A399 /* TreeTable.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,8 +53,6 @@
 		184AABA716F111A2008FAF7A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		184AABAC16F111A2008FAF7A /* DAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAViewController.h; sourceTree = "<group>"; };
 		184AABAD16F111A2008FAF7A /* DAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAViewController.m; sourceTree = "<group>"; };
-		184AABB516F12AF2008FAF7A /* TreeTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeTableView.h; sourceTree = "<group>"; };
-		184AABB616F12AF2008FAF7A /* TreeTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeTableView.m; sourceTree = "<group>"; };
 		18A4834216F138D300EA0400 /* Planets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Planets.plist; path = TreeViewExample/Planets.plist; sourceTree = "<group>"; };
 		18A4834516F142CD00EA0400 /* DASpanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DASpanCell.h; sourceTree = "<group>"; };
 		18A4834616F142CD00EA0400 /* DASpanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DASpanCell.m; sourceTree = "<group>"; };
@@ -63,6 +61,8 @@
 		18A4837216F2803400EA0400 /* DAPlanetStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAPlanetStore.m; sourceTree = "<group>"; };
 		18A4837416F3154000EA0400 /* DAItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAItem.h; sourceTree = "<group>"; };
 		18A4837516F3154000EA0400 /* DAItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAItem.m; sourceTree = "<group>"; };
+		18D0B5841764B19F00F8A399 /* TreeTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeTable.h; sourceTree = "<group>"; };
+		18D0B5851764B19F00F8A399 /* TreeTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeTable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +94,7 @@
 		184AAB8216F111A2008FAF7A = {
 			isa = PBXGroup;
 			children = (
-				184AABB416F12AF2008FAF7A /* TreeTableView */,
+				18D0B5831764B19F00F8A399 /* TreeTable */,
 				184AAB9416F111A2008FAF7A /* TreeViewExample */,
 				184AABB816F12AFF008FAF7A /* Res */,
 				184AAB8D16F111A2008FAF7A /* Frameworks */,
@@ -131,15 +131,6 @@
 				184AAB9C16F111A2008FAF7A /* TreeViewExample-Prefix.pch */,
 			);
 			path = TreeViewExample;
-			sourceTree = "<group>";
-		};
-		184AABB416F12AF2008FAF7A /* TreeTableView */ = {
-			isa = PBXGroup;
-			children = (
-				184AABB516F12AF2008FAF7A /* TreeTableView.h */,
-				184AABB616F12AF2008FAF7A /* TreeTableView.m */,
-			);
-			path = TreeTableView;
 			sourceTree = "<group>";
 		};
 		184AABB816F12AFF008FAF7A /* Res */ = {
@@ -187,6 +178,15 @@
 				18A4837516F3154000EA0400 /* DAItem.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		18D0B5831764B19F00F8A399 /* TreeTable */ = {
+			isa = PBXGroup;
+			children = (
+				18D0B5841764B19F00F8A399 /* TreeTable.h */,
+				18D0B5851764B19F00F8A399 /* TreeTable.m */,
+			);
+			path = TreeTable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,10 +266,10 @@
 				184AAB9B16F111A2008FAF7A /* main.m in Sources */,
 				184AAB9F16F111A2008FAF7A /* DAAppDelegate.m in Sources */,
 				184AABAE16F111A2008FAF7A /* DAViewController.m in Sources */,
-				184AABB716F12AF2008FAF7A /* TreeTableView.m in Sources */,
 				18A4834716F142CD00EA0400 /* DASpanCell.m in Sources */,
 				18A4837316F2803400EA0400 /* DAPlanetStore.m in Sources */,
 				18A4837616F3154100EA0400 /* DAItem.m in Sources */,
+				18D0B5861764B19F00F8A399 /* TreeTable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

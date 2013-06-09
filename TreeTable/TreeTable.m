@@ -1,10 +1,12 @@
 //
 //  TreeView.m
 //
+// Author: kernel@realm
+//
 
-#import "TreeTableView.h"
+#import "TreeTable.h"
 
-@interface TreeTableView()
+@interface TreeTable()
 @property (strong, nonatomic, readonly) NSMutableDictionary * model, *directModel;
 @property (nonatomic) NSUInteger rootItemsCount;
 
@@ -20,47 +22,18 @@
 - (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath root:(NSIndexPath *)root;
 @end
 
-@implementation TreeTableView
+@implementation TreeTable
 
-- (id)initWithCoder:(NSCoder *)decoder {
-	self = [super initWithCoder:decoder];
+- (id)init {
+	self = [super init];
 	if (self) {
-		[self setupView];
+		_model = [NSMutableDictionary dictionary];
+		_directModel = [NSMutableDictionary dictionary];
 	}
 	return self;
 }
 
-- (id)initWithFrame:(CGRect)frame {
-	self = [super initWithFrame:frame];
-	if (self) {
-		[self setupView];
-	}
-	return self;
-}
-
-- (void)setupView {
-	// Create underlying tableView.
-	{
-		_tableView = [[UITableView alloc] initWithFrame:self.bounds];
-		self.tableView.autoresizingMask = self.autoresizingMask;
-		
-		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		
-		self.tableView.delegate = self;
-		self.tableView.dataSource = self;
-		
-		[self addSubview:self.tableView];
-	}
-	
-	_model = [NSMutableDictionary dictionary];
-	_directModel = [NSMutableDictionary dictionary];
-}
-
-- (void)setAutoresizingMask:(UIViewAutoresizing)autoresizingMask {
-	[super setAutoresizingMask:autoresizingMask];
-	
-	self.tableView.autoresizingMask = autoresizingMask;
-}
+#pragma mark Instance methods
 
 - (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath {
 	NSUInteger row = [self rowOffsetForIndexPath:indexPath];
@@ -68,7 +41,7 @@
 }
 
 /**
- * Converts TreeTableView indexPath to TableView row index.
+ * Converts TreeTable indexPath to TableView row index.
  */
 - (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger totalCount = 0;
@@ -99,8 +72,8 @@
 	if (num) {
 		subitemsCount = num.intValue;
 	} else {
-		if ([self.dataSource treeView:self expanded:root]) {
-			subitemsCount = [self.dataSource treeView:self numberOfSubitems:root];
+		if ([self.dataSource treeView:self.tableView expanded:root]) {
+			subitemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:root];
 		}
 	}
 	
@@ -234,8 +207,8 @@
 - (NSUInteger)numberOfSubitems:(NSIndexPath *)indexPath {
 	NSUInteger count = 0;
 	
-	if ([self.dataSource treeView:self expanded:indexPath]) {
-		NSUInteger subitemsCount = [self.dataSource treeView:self numberOfSubitems:indexPath];
+	if ([self.dataSource treeView:self.tableView expanded:indexPath]) {
+		NSUInteger subitemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:indexPath];
 		for (int i=0; i<subitemsCount; i++ ) {
 			NSIndexPath * subitemPath = [indexPath indexPathByAddingIndex:i];
 			count += [self numberOfSubitems:subitemPath];
@@ -313,9 +286,19 @@
 
 #pragma mark UITableViewDelegate, -DataSource
 
+#pragma mark Sections & Footers
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+#pragma mark Cells
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	_tableView = tableView;
+	
 	// IndexPath==nil:  root items.
-	NSUInteger totalCount = self.rootItemsCount = [self.dataSource treeView:self numberOfSubitems:nil];
+	NSUInteger totalCount = self.rootItemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:nil];
 	
 	// Calc subitems of expanded items.
 	for (int i=0; i<self.rootItemsCount; i++ ) {
@@ -331,14 +314,14 @@
 		NSLog(@"ERR. Invalid itemPath: %@", itemPath);
 		return nil;
 	}
-	return [self.dataSource treeView:self itemForIndexPath:itemPath];
+	return [self.dataSource treeView:self.tableView itemForIndexPath:itemPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if ([self.delegate respondsToSelector:@selector(treeView:clicked:)]) {
 		NSIndexPath *ip = [self treeIndexOfRow:indexPath.row];
 		
-		[self.delegate treeView:self clicked:ip];
+		[self.delegate treeView:self.tableView clicked:ip];
 	}
 }
 
@@ -355,7 +338,7 @@
 		NSLog(@"ERR. Invalid itemPath: %@", itemPath);
 		return defaultHeight;
 	}
-	return [self.delegate treeView:self heightForItemAtIndexPath:itemPath];
+	return [self.delegate treeView:self.tableView heightForItemAtIndexPath:itemPath];
 }
 
 @end

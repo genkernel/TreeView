@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 			return UIApplicationMain(argc, argv, nil, NSStringFromClass([DAAppDelegate class]));
 		}
 		@catch (NSException *exception) {
-			NSLog(@"EXC Cattcha globally in main.m. Exc: %@", exception);
+			NSLog(@"EXC caught globally in main.m. Exc: %@", exception);
 			NSLog(@"Call Stack: %@", [exception callStackSymbols]);
 		}
 		@finally {

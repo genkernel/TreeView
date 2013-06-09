@@ -6,10 +6,12 @@
 //  Copyright (c) 2013 kernel@realm. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "DASpanCell.h"
 #import "DAPlanetStore.h"
 
 @interface DAViewController : UIViewController
-@property (strong, nonatomic) IBOutlet TreeTableView *treeView;
+@property (strong, nonatomic) IBOutlet TreeTable *treeModel;
+
+
+@property (strong, nonatomic) IBOutlet UITableView *treeView;
 @end
