@@ -72,8 +72,8 @@
 	if (num) {
 		subitemsCount = num.intValue;
 	} else {
-		if ([self.dataSource treeView:self.tableView expanded:root]) {
-			subitemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:root];
+		if ([self.dataSource tableView:self.tableView isCellExpanded:root]) {
+			subitemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:root];
 		}
 	}
 	
@@ -207,8 +207,8 @@
 - (NSUInteger)numberOfSubitems:(NSIndexPath *)indexPath {
 	NSUInteger count = 0;
 	
-	if ([self.dataSource treeView:self.tableView expanded:indexPath]) {
-		NSUInteger subitemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:indexPath];
+	if ([self.dataSource tableView:self.tableView isCellExpanded:indexPath]) {
+		NSUInteger subitemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:indexPath];
 		for (int i=0; i<subitemsCount; i++ ) {
 			NSIndexPath * subitemPath = [indexPath indexPathByAddingIndex:i];
 			count += [self numberOfSubitems:subitemPath];
@@ -289,6 +289,7 @@
 #pragma mark Sections & Footers
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	// TODO: Impl Sections & Footers support.
 	return 1;
 }
 
@@ -298,7 +299,7 @@
 	_tableView = tableView;
 	
 	// IndexPath==nil:  root items.
-	NSUInteger totalCount = self.rootItemsCount = [self.dataSource treeView:self.tableView numberOfSubitems:nil];
+	NSUInteger totalCount = self.rootItemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:nil];
 	
 	// Calc subitems of expanded items.
 	for (int i=0; i<self.rootItemsCount; i++ ) {
@@ -314,31 +315,7 @@
 		NSLog(@"ERR. Invalid itemPath: %@", itemPath);
 		return nil;
 	}
-	return [self.dataSource treeView:self.tableView itemForIndexPath:itemPath];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if ([self.delegate respondsToSelector:@selector(treeView:clicked:)]) {
-		NSIndexPath *ip = [self treeIndexOfRow:indexPath.row];
-		
-		[self.delegate treeView:self.tableView clicked:ip];
-	}
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	const CGFloat defaultHeight = 50.;
-	
-	BOOL isImplemented = [self.delegate respondsToSelector:@selector(treeView:heightForItemAtIndexPath:)];
-	if (!isImplemented) {
-		return defaultHeight;
-	}
-	
-	NSIndexPath * itemPath = [self treeIndexOfRow:indexPath.row];
-	if (!itemPath) {
-		NSLog(@"ERR. Invalid itemPath: %@", itemPath);
-		return defaultHeight;
-	}
-	return [self.delegate treeView:self.tableView heightForItemAtIndexPath:itemPath];
+	return [self.dataSource tableView:self.tableView cellForRowAtIndexPath:itemPath];
 }
 
 @end

@@ -17,8 +17,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="msH-fn-rgb" id="hhR-NH-wrc"/>
-                                    <outlet property="delegate" destination="msH-fn-rgb" id="uUM-2q-6ts"/>
+                                    <outlet property="dataSource" destination="msH-fn-rgb" id="OeW-ua-FnD"/>
+                                    <outlet property="delegate" destination="2" id="nxu-gE-cgS"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -30,10 +30,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
-                <customObject id="msH-fn-rgb" customClass="TreeTableView">
+                <customObject id="msH-fn-rgb" customClass="TreeTable">
                     <connections>
-                        <outlet property="dataSource" destination="2" id="6rx-4q-Rir"/>
-                        <outlet property="delegate" destination="2" id="a1V-7V-bFL"/>
+                        <outlet property="dataSource" destination="2" id="o1s-Ae-gxE"/>
                     </connections>
                 </customObject>
             </objects>
@@ -43,15 +42,14 @@
         <class className="DAViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DAViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="treeModel" candidateClass="TreeTableView"/>
+                <relationship kind="outlet" name="treeModel" candidateClass="TreeTable"/>
                 <relationship kind="outlet" name="treeView" candidateClass="UITableView"/>
             </relationships>
         </class>
-        <class className="TreeTableView" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TreeTableView.h"/>
+        <class className="TreeTable" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TreeTable.h"/>
             <relationships>
                 <relationship kind="outlet" name="dataSource"/>
-                <relationship kind="outlet" name="delegate"/>
             </relationships>
         </class>
     </classes>

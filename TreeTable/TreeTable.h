@@ -6,11 +6,9 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TreeTableDelegate;
 @protocol TreeTableDataSource;
 
-@interface TreeTable : NSObject <UITableViewDelegate, UITableViewDataSource>
-@property (weak, nonatomic) IBOutlet id<TreeTableDelegate> delegate;
+@interface TreeTable : NSObject <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet id<TreeTableDataSource> dataSource;
 
 @property (weak, nonatomic, readonly) UITableView *tableView;
@@ -28,19 +26,13 @@
 // Coverts multidimensional indexPath into 2d UITableView-like indexPath.
 // This helper method is required to prepare indexPath parameter when calling UITableView methods.
 - (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath;
+// Converts UITableTable 2d row index into treeTable multidimentional indexPath.
+- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row;
 @end
 
 
-@protocol TreeTableDelegate <NSObject>
-@optional
-- (void)treeView:(UITableView *)treeView clicked:(NSIndexPath *)indexPath;
-- (CGFloat)treeView:(UITableView *)treeView heightForItemAtIndexPath:(NSIndexPath *)indexPath;
-@end
-
-
-@protocol TreeTableDataSource <NSObject>
+@protocol TreeTableDataSource <UITableViewDataSource>
 @required
-- (BOOL)treeView:(UITableView *)treeView expanded:(NSIndexPath *)indexPath;
-- (NSUInteger)treeView:(UITableView *)treeView numberOfSubitems:(NSIndexPath *)indexPath;
-- (UITableViewCell *)treeView:(UITableView *)treeView itemForIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath;
+- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath;
 @end

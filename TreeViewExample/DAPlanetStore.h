@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 kernel@realm. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "DAItem.h"
+#import "TreeTable.h"
 
 @interface DAPlanetStore : NSObject
 + (DAPlanetStore *)defaultStore;

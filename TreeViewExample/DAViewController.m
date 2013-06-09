@@ -32,13 +32,13 @@
 	_store = [DAPlanetStore defaultStore];
 }
 
-#pragma mark TreeTableDataSource, -Delegate
+#pragma mark TreeTableDataSource
 
-- (BOOL)treeView:(UITableView *)treeView expanded:(NSIndexPath *)indexPath {
+- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath {
 	return nil != self.expandedItems[indexPath];
 }
 
-- (NSUInteger)treeView:(UITableView *)treeView numberOfSubitems:(NSIndexPath *)indexPath {
+- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath) {
 		DAItem *item = [self.store itemForIndexPath:indexPath];
 		return [self.store numberOfSubitemsForItem:item];
@@ -48,10 +48,10 @@
 	}
 }
 
-- (UITableViewCell *)treeView:(UITableView *)treeView itemForIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	DAItem *item = [self.store itemForIndexPath:indexPath];
 	
-	DASpanCell *cell = [treeView dequeueReusableCellWithIdentifier:SpanningCellUId];
+	DASpanCell *cell = [tableView dequeueReusableCellWithIdentifier:SpanningCellUId];
 	[cell setSpanLevel:indexPath.length];
 	
 	[cell loadItem:item];
@@ -59,29 +59,30 @@
 	return cell;
 }
 
-- (void)treeView:(UITableView *)treeView clicked:(NSIndexPath *)indexPath {
-	NSIndexPath *ip = [self.treeModel tableIndexPathFromTreePath:indexPath];
-	[treeView deselectRowAtIndexPath:ip animated:YES];
+#pragma mark UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)tableIndexPath {
+	NSIndexPath *treeIndexPath = [self.treeModel treeIndexOfRow:tableIndexPath.row];
 	
-	BOOL isExpanded = [self.treeModel isExpanded:indexPath];
+	DAItem *item = [self.store itemForIndexPath:treeIndexPath];
+	return [self.firstCell heightForCellWithItem:item atLevel:treeIndexPath.length];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)tableIndexPath {
+	[tableView deselectRowAtIndexPath:tableIndexPath animated:YES];
+	
+	NSIndexPath *treeIndexPath = [self.treeModel treeIndexOfRow:tableIndexPath.row];
+	
+	BOOL isExpanded = [self.treeModel isExpanded:treeIndexPath];
 	if (isExpanded) {
-		[self.expandedItems removeObjectForKey:indexPath];
+		[self.expandedItems removeObjectForKey:treeIndexPath];
 		
-		[self.treeModel close:indexPath];
+		[self.treeModel close:treeIndexPath];
 	} else {
-		self.expandedItems[indexPath] = @(YES);
+		self.expandedItems[treeIndexPath] = @(YES);
 		
-		[self.treeModel expand:indexPath];
+		[self.treeModel expand:treeIndexPath];
 	}
 }
 
-- (CGFloat)treeView:(UITableView *)treeView heightForItemAtIndexPath:(NSIndexPath *)indexPath {
-	DAItem *item = [self.store itemForIndexPath:indexPath];
-	return [self.firstCell heightForCellWithItem:item atLevel:indexPath.length];
-}
-
-- (void)viewDidUnload {
-    [self setTreeModel:nil];
-    [super viewDidUnload];
-}
 @end

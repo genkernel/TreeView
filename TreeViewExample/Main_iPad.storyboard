@@ -18,7 +18,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="mne-Qk-OnK" id="7XI-gR-OUg"/>
-                                    <outlet property="delegate" destination="mne-Qk-OnK" id="kkp-vk-jeP"/>
+                                    <outlet property="delegate" destination="WuU-Sg-bNa" id="soz-KK-Kba"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -33,7 +33,6 @@
                 <customObject id="mne-Qk-OnK" customClass="TreeTable">
                     <connections>
                         <outlet property="dataSource" destination="WuU-Sg-bNa" id="0y3-KL-UtE"/>
-                        <outlet property="delegate" destination="WuU-Sg-bNa" id="zPe-eE-5Dd"/>
                     </connections>
                 </customObject>
             </objects>
@@ -52,7 +51,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TreeTable.h"/>
             <relationships>
                 <relationship kind="outlet" name="dataSource"/>
-                <relationship kind="outlet" name="delegate"/>
             </relationships>
         </class>
     </classes>

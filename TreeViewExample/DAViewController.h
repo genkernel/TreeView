@@ -9,9 +9,8 @@
 #import "DASpanCell.h"
 #import "DAPlanetStore.h"
 
-@interface DAViewController : UIViewController
+@interface DAViewController : UIViewController <UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet TreeTable *treeModel;
-
 
 @property (strong, nonatomic) IBOutlet UITableView *treeView;
 @end
