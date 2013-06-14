@@ -1,5 +1,5 @@
 //
-//  TreeView.m
+// TreeView.m
 //
 // Author: kernel@realm
 //
@@ -7,19 +7,8 @@
 #import "TreeTable.h"
 
 @interface TreeTable()
-@property (strong, nonatomic, readonly) NSMutableDictionary * model, *directModel;
+@property (strong, nonatomic, readonly) NSMutableDictionary *model, *directModel;
 @property (nonatomic) NSUInteger rootItemsCount;
-
-- (NSUInteger)numberOfSubitems:(NSIndexPath *)indexPath;
-
-- (void)close:(NSIndexPath *)indexPath array:(NSMutableArray *)diissRows;
-- (void)expand:(NSIndexPath *)indexPath array:(NSMutableArray *)rows;
-
-- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row;
-- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row root:(NSIndexPath *)root offset:(NSUInteger)offset;
-
-- (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath;
-- (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath root:(NSIndexPath *)root;
 @end
 
 @implementation TreeTable
@@ -27,8 +16,8 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		_model = [NSMutableDictionary dictionary];
-		_directModel = [NSMutableDictionary dictionary];
+		_model = NSMutableDictionary.dictionary;
+		_directModel = NSMutableDictionary.dictionary;
 	}
 	return self;
 }
@@ -44,20 +33,10 @@
  * Converts TreeTable indexPath to TableView row index.
  */
 - (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath {
-	NSUInteger totalCount = 0;
+	NSUInteger section = [indexPath indexAtPosition:0];
+	NSIndexPath *ip = [NSIndexPath indexPathWithIndex:section];
 	
-	for (int i=0; i<self.rootItemsCount; i++) {
-		NSIndexPath *ip = [NSIndexPath indexPathWithIndex:i];
-		if (i==[indexPath indexAtPosition:0]) {
-			NSUInteger count = [self rowOffsetForIndexPath:indexPath root:ip];
-			totalCount += count;
-			break;
-		} else {
-			NSNumber* num = [self.model objectForKey:ip];
-			totalCount += [num intValue]+1;
-		}
-	}
-	return totalCount;
+	return [self rowOffsetForIndexPath:indexPath root:ip];
 }
 
 - (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath root:(NSIndexPath *)root {
@@ -65,10 +44,13 @@
 		return 0;
 	}
 	
-	NSUInteger totalCount = 1;
+	NSUInteger totalCount = 0;
+	if (root.length > 1) {
+		totalCount++;
+	}
 	
 	NSUInteger subitemsCount = 0;
-	NSNumber* num = [self.directModel objectForKey:root];
+	NSNumber *num = self.directModel[root];
 	if (num) {
 		subitemsCount = num.intValue;
 	} else {
@@ -77,7 +59,7 @@
 		}
 	}
 	
-	for (int i=0; i<subitemsCount; i++) {
+	for (int i = 0; i < subitemsCount; i++) {
 		NSIndexPath *ip = [root indexPathByAddingIndex:i];
 		
 		if (NSOrderedAscending != [ip compare:indexPath]) {
@@ -93,6 +75,7 @@
 			totalCount += count;
 		}
 	}
+	
 	return totalCount;
 }
 
@@ -107,41 +90,39 @@
 	
 	[self numberOfSubitems:indexPath];
 	
-	NSMutableArray * insertRows = [NSMutableArray array];
+	NSMutableArray *insertRows = [NSMutableArray array];
 	[self expand:indexPath array:insertRows];
 	
 	[self.tableView insertRowsAtIndexPaths:insertRows withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)expand:(NSIndexPath *)indexPath array:(NSMutableArray *)rows {
-	NSNumber* num = [self.directModel objectForKey:indexPath];
-	NSUInteger count = [num intValue];
+	NSUInteger section = indexPath.section;
+	NSUInteger count = [self.directModel[indexPath] unsignedIntegerValue];
 		
 	if (count > 0) {
-		for (int i=0; i<count; i++) {
+		for (int i = 0; i < count; i++) {
 			NSIndexPath *ip = [indexPath indexPathByAddingIndex:i];
 			[self expand:ip array:rows];
 		}
 		
-		NSMutableArray * insertRows = [NSMutableArray arrayWithCapacity:count];
-		for (int i=0; i<count; i++) {
+		NSMutableArray *insertRows = [NSMutableArray arrayWithCapacity:count];
+		for (NSUInteger i = 0; i < count; i++) {
 			NSIndexPath *ip = [indexPath indexPathByAddingIndex:i];
 			NSUInteger row = [self rowOffsetForIndexPath:ip];
-			[insertRows addObject:[NSIndexPath indexPathForRow:row inSection:0]];
-			//NSLog(@"Insert(T): %@", [NSIndexPath indexPathForRow:row inSection:0]);
+			
+			[insertRows addObject:[NSIndexPath indexPathForRow:row inSection:section]];
 		}
 		[rows addObjectsFromArray:insertRows];
 	}
-	
-	//NSLog(@"Expanded. Model: %@", self.model);
-	//NSLog(@"Expanded. DirectModel: %@", self.directModel);
 }
 
 - (NSArray*)siblings:(NSIndexPath *)indexPath {
 	NSIndexPath * parent = [self parent:indexPath];
-	
 	NSMutableArray *arr = [NSMutableArray arrayWithCapacity:20];
-	for (int i=0; i<self.rootItemsCount; i++) {
+	
+	// TODO: dont use "numberOfSections" as it triggers dataSource methods.
+	for (int i = 0; i < self.tableView.numberOfSections; i++) {
 		NSIndexPath *ip = nil;
 		if (parent) {
 			ip = [parent indexPathByAddingIndex:i];
@@ -176,22 +157,21 @@
 }
 
 - (void)close:(NSIndexPath *)indexPath array:(NSMutableArray *)rows {
-	NSNumber* num = [self.directModel objectForKey:indexPath];
+	NSUInteger section = indexPath.section;
+	NSUInteger count = [self.directModel[indexPath] unsignedIntegerValue];
 	
-	NSUInteger count = [num intValue];
-	if (count>0) {
-		
+	if (count > 0) {
 		NSUInteger row = 0;
-		NSMutableArray * dismissRows = [NSMutableArray arrayWithCapacity:count];
-		for (int i=0; i<count; i++) {
+		NSMutableArray *dismissRows = [NSMutableArray arrayWithCapacity:count];
+		for (NSUInteger i = 0; i < count; i++) {
 			NSIndexPath *ip = [indexPath indexPathByAddingIndex:i];
 			
 			row = [self rowOffsetForIndexPath:ip];
-			[dismissRows addObject:[NSIndexPath indexPathForRow:row inSection:0]];
+			[dismissRows addObject:[NSIndexPath indexPathForRow:row inSection:section]];
 		}
 		[rows addObjectsFromArray:dismissRows];
 		
-		for (int i=count-1; i>=0; i--) {
+		for (int i = count-1; i >= 0; i--) {
 			NSIndexPath *ip = [indexPath indexPathByAddingIndex:i];
 			[self close:ip array:rows];
 		}
@@ -199,31 +179,38 @@
 	
 	[self.model removeObjectForKey:indexPath];
 	[self.directModel removeObjectForKey:indexPath];
-	
-	//NSLog(@"Closed. Model: %@", self.model);
-	//NSLog(@"Closed. DirectModel: %@", self.directModel);
 }
 
 - (NSUInteger)numberOfSubitems:(NSIndexPath *)indexPath {
 	NSUInteger count = 0;
 	
-	if ([self.dataSource tableView:self.tableView isCellExpanded:indexPath]) {
+	BOOL isExpanded = NO;
+	if (1 == indexPath.length) {
+		// Sections are always expanded.
+		isExpanded = YES;
+	} else {
+		isExpanded = [self.dataSource tableView:self.tableView isCellExpanded:indexPath];
+	}
+	
+	if (isExpanded) {
 		NSUInteger subitemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:indexPath];
+		
 		for (int i=0; i<subitemsCount; i++ ) {
-			NSIndexPath * subitemPath = [indexPath indexPathByAddingIndex:i];
+			NSIndexPath *subitemPath = [indexPath indexPathByAddingIndex:i];
 			count += [self numberOfSubitems:subitemPath];
 		}
+		
 		count += subitemsCount;
 		[self.directModel setObject:@(subitemsCount) forKey:indexPath];
 	}
-	[self.model setObject:@(count) forKey:indexPath];
 	
+	[self.model setObject:@(count) forKey:indexPath];
 	return count;
 }
 
-- (NSIndexPath *)indexPathForItem:(UITableViewCell*)item {
-	NSIndexPath * tableIndexPath = [self.tableView indexPathForCell:item];
-	return [self treeIndexOfRow:tableIndexPath.row];
+- (NSIndexPath *)treeIndexPathForItem:(UITableViewCell *)item {
+	NSIndexPath *tableIndexPath = [self.tableView indexPathForCell:item];
+	return [self treeIndexPathFromTablePath:tableIndexPath];
 }
 
 - (NSIndexPath *)treeIndexOfRow:(NSUInteger)row root:(NSIndexPath *)root offset:(NSUInteger)offset {
@@ -233,21 +220,22 @@
 	NSUInteger count = 0;
 	
 	NSIndexPath *ip = nil;
-	NSNumber* num = [self.model objectForKey:root];
-	if (0==num.intValue) {
+	NSUInteger num = [[self.model objectForKey:root] unsignedIntValue];
+	
+	if (0 == num) {
 		return root;
 	}
-	for (int i=0; i<[num intValue]; i++) {
+	
+	for (int i = 0; i < num; i++) {
 		if (row == count) {
 			return [root indexPathByAddingIndex:i];
 		}
 		
 		ip = [root indexPathByAddingIndex:i];
-		NSNumber* num = [self.model objectForKey:ip];
+		NSUInteger numValue = [[self.model objectForKey:ip] unsignedIntegerValue];
 		
 		count += 1;
-		NSUInteger numValue = [num intValue];
-		if (row < numValue+count) {
+		if (row < numValue + count) {
 			return [self treeIndexOfRow:row-count root:ip offset:count];
 		}
 		
@@ -256,31 +244,40 @@
 	return ip;
 }
 
-- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row {
+- (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)indexPath {
 	NSUInteger count = 0;
 	
-	for (int i=0; i<self.rootItemsCount; i++) {
+	NSUInteger section = indexPath.section;
+	NSUInteger row = indexPath.row;
+	
+	NSIndexPath *ip = [NSIndexPath indexPathWithIndex:section];
+	NSUInteger rowsCount = [self.directModel[ip] unsignedIntegerValue];
+	
+	for (NSUInteger r = 0; r < rowsCount; r++) {
 		if (row == count) {
-			return [NSIndexPath indexPathWithIndex:i];
+			return [NSIndexPath indexPathForRow:r inSection:section];
 		}
 		
-		NSIndexPath *ip = [NSIndexPath indexPathWithIndex:i];
-		NSNumber* num = [self.model objectForKey:ip];
+		NSIndexPath *ip = [NSIndexPath indexPathForRow:r inSection:section];
+		NSUInteger numValue = [[self.model objectForKey:ip] unsignedIntegerValue];
 		
 		count += 1;
-		NSUInteger numValue = [num intValue];
-		if (row < numValue+count) {
+		
+		if (row < numValue + count) {
+			NSIndexPath *ip = [NSIndexPath indexPathForRow:r inSection:section];
 			return [self treeIndexOfRow:row-count root:ip offset:count];
 		}
 		
 		count += numValue;
 	}
+	
+	NSLog(@"ERR. Error while converting tableIndexPath into treeIndexPath. %s", __PRETTY_FUNCTION__);
 	return nil;
 }
 
-- (UITableViewCell*)itemForIndexPath:(NSIndexPath *)indexPath {
-	NSUInteger row = [self rowOffsetForIndexPath:indexPath];
-	return [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+- (UITableViewCell *)itemForTreeIndexPath:(NSIndexPath *)indexPath {
+	NSIndexPath *ip = [self tableIndexPathFromTreePath:indexPath];
+	return [self.tableView cellForRowAtIndexPath:ip];
 }
 
 #pragma mark Forwarding to Original DataSource
@@ -297,32 +294,35 @@
 	if (responds) {
 		return responds;
 	}
-	
 	return [self.dataSource respondsToSelector:selector];
 }
 
 #pragma mark UITableViewDataSource
 
-#pragma mark Cells
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	_tableView = tableView;
 	
-	// IndexPath == nil:  request root items with 'nil' indexPath.
-	NSUInteger totalCount = self.rootItemsCount = [self.dataSource tableView:self.tableView numberOfSubCellsForCellAtIndexPath:nil];
+	NSUInteger rows = [self.dataSource tableView:tableView numberOfRowsInSection:section];
+	NSUInteger totalRowsCount = rows;
 	
-	// Calc subitems of expanded items.
-	for (int i=0; i<self.rootItemsCount; i++ ) {
-		totalCount += [self numberOfSubitems:[NSIndexPath indexPathWithIndex:i]];
+	NSIndexPath *ip = [NSIndexPath indexPathWithIndex:section];
+	self.directModel[ip] = @(rows);
+	
+	for (int i = 0; i < rows; i++) {
+		NSIndexPath *ip = [NSIndexPath indexPathForRow:i inSection:section];
+		totalRowsCount += [self numberOfSubitems:ip];
 	}
 	
-	return totalCount;
+	self.model[ip] = @(totalRowsCount);
+	
+	return totalRowsCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSIndexPath * itemPath = [self treeIndexOfRow:indexPath.row];
+	NSIndexPath * itemPath = [self treeIndexPathFromTablePath:indexPath];
+	
 	if (!itemPath) {
-		NSLog(@"ERR. Invalid itemPath: %@", itemPath);
+		NSLog(@"ERR. nil indexPath specified. %s", __PRETTY_FUNCTION__);
 		return nil;
 	}
 	return [self.dataSource tableView:self.tableView cellForRowAtIndexPath:itemPath];

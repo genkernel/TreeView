@@ -4,11 +4,12 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_1
-#warning "This project uses features only available in iOS SDK 5.1 and later."
+#ifndef __IPHONE_6_0
+#warning "This project uses features only available in iOS SDK 6.0 and later."
 #endif
 
 #ifdef __OBJC__
 	#import <UIKit/UIKit.h>
+	#import <QuartzCore/QuartzCore.h>
 	#import <Foundation/Foundation.h>
 #endif

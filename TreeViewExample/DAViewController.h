@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 kernel@realm. All rights reserved.
 //
 
-#import "DASpanCell.h"
-#import "DAPlanetStore.h"
+#import "TreeTable.h"
 
 @interface DAViewController : UIViewController <UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet TreeTable *treeModel;

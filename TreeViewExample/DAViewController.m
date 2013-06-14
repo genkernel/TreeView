@@ -8,12 +8,13 @@
 
 #import "DAViewController.h"
 
+static NSString *Subitems = @"Subitems";
+static NSString *Title = @"Title";
+
 @interface DAViewController ()
-@property (strong, nonatomic, readonly) DAPlanetStore *store;
 // <indexPath> => @(YES) or nil.
 @property (strong, nonatomic, readonly) NSMutableDictionary *expandedItems;
-// This cell is reused to calculate cell height based on dynamic text content.
-@property (strong, nonatomic, readonly) DASpanCell *firstCell;
+@property (strong, nonatomic, readonly) NSArray *easy;
 @end
 
 @implementation DAViewController
@@ -22,20 +23,49 @@
 {
     [super viewDidLoad];
 	
-	NSString *name =  NSStringFromClass(DASpanCell.class);
-	UINib *nib = [UINib nibWithNibName:name bundle:nil];
-	[self.treeView registerNib:nib forCellReuseIdentifier:SpanningCellUId];
+	_expandedItems = NSMutableDictionary.dictionary;
 	
-	_firstCell = [self.treeView dequeueReusableCellWithIdentifier:SpanningCellUId];
+	NSString *path = [NSBundle.mainBundle pathForResource:@"Easy" ofType:@"plist"];
+	_easy = [NSArray arrayWithContentsOfFile:path];
 	
-	_expandedItems = [NSMutableDictionary dictionary];
-	_store = [DAPlanetStore defaultStore];
+	Class cls = UITableViewCell.class;
+	NSString *identifier =  NSStringFromClass(cls);
+	[self.treeView registerClass:cls forCellReuseIdentifier:identifier];
+}
+
+- (NSDictionary *)itemForIndexPath:(NSIndexPath *)indexPath {
+	NSArray *items = self.easy;
+	NSDictionary *item = self.easy[[indexPath indexAtPosition:0]];
+	
+	for (int i = 0; i < indexPath.length; i++) {
+		NSUInteger idx = [indexPath indexAtPosition:i];
+		
+		item = items[idx];
+		
+		if (i == indexPath.length - 1) {
+			return item;
+		}
+		
+		items = item[Subitems];
+	}
+	
+	return item;
 }
 
 #pragma mark TreeTableDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+	return self.easy.count;
+}
+
+- (BOOL)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	NSDictionary *item = self.easy[section];
+	return [item[Subitems] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	NSDictionary *item = self.easy[section];
+	return item[Title];
 }
 
 - (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath {
@@ -43,48 +73,52 @@
 }
 
 - (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath) {
-		DAItem *item = [self.store itemForIndexPath:indexPath];
-		return [self.store numberOfSubitemsForItem:item];
-	} else {
-		// nil indexPath - return items number for root (no parent).
-		return self.store.rootItems.count;
-	}
+	NSDictionary *item = [self itemForIndexPath:indexPath];
+	return [item[Subitems] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	DAItem *item = [self.store itemForIndexPath:indexPath];
+	NSDictionary *item = [self itemForIndexPath:indexPath];
 	
-	DASpanCell *cell = [tableView dequeueReusableCellWithIdentifier:SpanningCellUId];
-	[cell setSpanLevel:indexPath.length];
+	NSString *identifier =  NSStringFromClass(UITableViewCell.class);
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	
-	[cell loadItem:item];
+	cell.indentationLevel = indexPath.length - 1;
 	
+	NSString *title = nil;
+	if ([item isKindOfClass:NSDictionary.class]) {
+		title = item[Title];
+		
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	} else {
+		title = (NSString *)item;
+		
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	cell.textLabel.text = title;
+	
+//	NSLog(@"%@ -> %@", indexPath, title);
 	return cell;
 }
 
 #pragma mark UITableViewDelegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)tableIndexPath {
-	NSIndexPath *treeIndexPath = [self.treeModel treeIndexOfRow:tableIndexPath.row];
-	
-	DAItem *item = [self.store itemForIndexPath:treeIndexPath];
-	return [self.firstCell heightForCellWithItem:item atLevel:treeIndexPath.length];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)tableIndexPath {
 	[tableView deselectRowAtIndexPath:tableIndexPath animated:YES];
 	
-	NSIndexPath *treeIndexPath = [self.treeModel treeIndexOfRow:tableIndexPath.row];
+	NSIndexPath *treeIndexPath = [self.treeModel treeIndexPathFromTablePath:tableIndexPath];
 	
 	BOOL isExpanded = [self.treeModel isExpanded:treeIndexPath];
 	if (isExpanded) {
 		[self.expandedItems removeObjectForKey:treeIndexPath];
-		
 		[self.treeModel close:treeIndexPath];
 	} else {
-		self.expandedItems[treeIndexPath] = @(YES);
+		NSDictionary *item = [self itemForIndexPath:treeIndexPath];
+		if ([item isKindOfClass:NSString.class]) {
+			return;
+		}
 		
+		self.expandedItems[treeIndexPath] = @(YES);
 		[self.treeModel expand:treeIndexPath];
 	}
 }

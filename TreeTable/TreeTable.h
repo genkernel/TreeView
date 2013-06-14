@@ -1,5 +1,5 @@
 //
-//  TreeTable.h
+// TreeTable.h
 //
 // Author: kernel@realm
 //
@@ -26,12 +26,13 @@
 - (NSArray *)siblings:(NSIndexPath *)indexPath;
 - (NSIndexPath *)parent:(NSIndexPath *)indexPath;
 
-- (UITableViewCell *)itemForIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathForItem:(UITableViewCell *)item;
+- (UITableViewCell *)itemForTreeIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)treeIndexPathForItem:(UITableViewCell *)item;
 // Coverts multidimensional indexPath into 2d UITableView-like indexPath.
 // This helper method is required to prepare indexPath parameter when calling UITableView methods.
 - (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath;
-// Converts UITableTable 2d row index into treeTable multidimentional indexPath.
-- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row;
+// Converts UITableTable 2d indexPath into multidimentional indexPath.
+//- (NSIndexPath *)treeIndexOfRow:(NSUInteger)row;
+- (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)indexPath;
 @end
 

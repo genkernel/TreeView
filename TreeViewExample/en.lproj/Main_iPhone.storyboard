@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
+        <development version="4600" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
@@ -12,9 +14,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ecf-ud-b0S">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-ud-b0S">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="msH-fn-rgb" id="OeW-ua-FnD"/>
@@ -23,6 +23,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ecf-ud-b0S" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="F8f-8P-jff"/>
+                            <constraint firstItem="ecf-ud-b0S" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="rV3-aK-hVD"/>
+                            <constraint firstItem="ecf-ud-b0S" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="xwA-ip-MiC"/>
+                            <constraint firstItem="ecf-ud-b0S" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="yqr-lv-sgj"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="treeModel" destination="msH-fn-rgb" id="ooI-Ig-ouN"/>
@@ -45,6 +51,9 @@
                 <relationship kind="outlet" name="treeModel" candidateClass="TreeTable"/>
                 <relationship kind="outlet" name="treeView" candidateClass="UITableView"/>
             </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
         <class className="TreeTable" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TreeTable.h"/>
