@@ -86,6 +86,8 @@ With UITableView data srtucture exposed via 2d indexPaths only. For example:
 
 See demo app example that represents this concept in action.
 
+![Concept](https://github.com/genkernel/TreeView/raw/master/DemoArt/demo.gif)
+
 TODO
 ---
 
