@@ -18,6 +18,9 @@
 	if (self) {
 		_model = NSMutableDictionary.dictionary;
 		_directModel = NSMutableDictionary.dictionary;
+		
+		self.expandingAnimation = UITableViewRowAnimationAutomatic;
+		self.closingAnimation = UITableViewRowAnimationAutomatic;
 	}
 	return self;
 }
@@ -153,7 +156,7 @@
 	NSMutableArray * dismissRows = [NSMutableArray array];
 	[self close:indexPath array:dismissRows];
 	
-	[self.tableView deleteRowsAtIndexPaths:dismissRows withRowAnimation:UITableViewRowAnimationAutomatic];
+	[self.tableView deleteRowsAtIndexPaths:dismissRows withRowAnimation:self.closingAnimation];
 }
 
 - (void)close:(NSIndexPath *)indexPath array:(NSMutableArray *)rows {

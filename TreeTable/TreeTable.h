@@ -16,6 +16,8 @@
 @interface TreeTable : NSObject <UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet id<TreeTableDataSource> dataSource;
 
+@property (nonatomic) UITableViewRowAnimation expandingAnimation, closingAnimation;
+
 @property (weak, nonatomic, readonly) UITableView *tableView;
 
 // Expands the row revealing its sibling items.
