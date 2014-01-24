@@ -33,7 +33,7 @@
 }
 
 /**
- * Converts TreeTable indexPath to TableView row index.
+ Converts TreeTable indexPath to TableView row index.
  */
 - (NSUInteger)rowOffsetForIndexPath:(NSIndexPath *)indexPath {
 	NSUInteger section = [indexPath indexAtPosition:0];
@@ -86,6 +86,9 @@
 	return nil != self.directModel[indexPath];
 }
 
+/**
+ * Expands row revealing its child items.
+ */
 - (void)expand:(NSIndexPath *)indexPath {
 	if ([self isExpanded:indexPath]) {
 		return;
@@ -120,7 +123,7 @@
 	}
 }
 
-- (NSArray*)siblings:(NSIndexPath *)indexPath {
+- (NSArray *)siblings:(NSIndexPath *)indexPath {
 	NSIndexPath * parent = [self parent:indexPath];
 	NSMutableArray *arr = [NSMutableArray arrayWithCapacity:20];
 	
@@ -148,6 +151,9 @@
 	}
 }
 
+/**
+ * Closes expanded row.
+ */
 - (void)close:(NSIndexPath *)indexPath {
 	if (![self isExpanded:indexPath]) {
 		return;
