@@ -167,12 +167,12 @@
 
 - (void)close:(NSIndexPath *)indexPath array:(NSMutableArray *)rows {
 	NSUInteger section = indexPath.section;
-	NSUInteger count = [self.directModel[indexPath] unsignedIntegerValue];
+	int count = [self.directModel[indexPath] intValue];
 	
 	if (count > 0) {
 		NSUInteger row = 0;
 		NSMutableArray *dismissRows = [NSMutableArray arrayWithCapacity:count];
-		for (NSUInteger i = 0; i < count; i++) {
+		for (int i = 0; i < count; i++) {
 			NSIndexPath *ip = [indexPath indexPathByAddingIndex:i];
 			
 			row = [self rowOffsetForIndexPath:ip];
