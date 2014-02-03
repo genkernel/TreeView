@@ -18,14 +18,12 @@
 		184AAB9916F111A2008FAF7A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 184AAB9716F111A2008FAF7A /* InfoPlist.strings */; };
 		184AAB9B16F111A2008FAF7A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 184AAB9A16F111A2008FAF7A /* main.m */; };
 		184AAB9F16F111A2008FAF7A /* DAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 184AAB9E16F111A2008FAF7A /* DAAppDelegate.m */; };
-		184AABA116F111A2008FAF7A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA016F111A2008FAF7A /* Default.png */; };
-		184AABA316F111A2008FAF7A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA216F111A2008FAF7A /* Default@2x.png */; };
-		184AABA516F111A2008FAF7A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA416F111A2008FAF7A /* Default-568h@2x.png */; };
 		184AABA816F111A2008FAF7A /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 184AABA616F111A2008FAF7A /* Main_iPhone.storyboard */; };
 		184AABAE16F111A2008FAF7A /* DAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 184AABAD16F111A2008FAF7A /* DAViewController.m */; };
 		18D0B5861764B19F00F8A399 /* TreeTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D0B5851764B19F00F8A399 /* TreeTable.m */; };
 		18D9FD81176BCB1900DD10F4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D9FD80176BCB1900DD10F4 /* QuartzCore.framework */; };
 		18F5690B176937FE00D1411A /* Easy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18F5690A176937F400D1411A /* Easy.plist */; };
+		1E91D29218A008C700A02542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E91D29118A008C700A02542 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,9 +42,6 @@
 		184AAB9C16F111A2008FAF7A /* TreeViewExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TreeViewExample-Prefix.pch"; sourceTree = "<group>"; };
 		184AAB9D16F111A2008FAF7A /* DAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAAppDelegate.h; sourceTree = "<group>"; };
 		184AAB9E16F111A2008FAF7A /* DAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAAppDelegate.m; sourceTree = "<group>"; };
-		184AABA016F111A2008FAF7A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = TreeViewExample/Default.png; sourceTree = "<group>"; };
-		184AABA216F111A2008FAF7A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "TreeViewExample/Default@2x.png"; sourceTree = "<group>"; };
-		184AABA416F111A2008FAF7A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "TreeViewExample/Default-568h@2x.png"; sourceTree = "<group>"; };
 		184AABA716F111A2008FAF7A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		184AABAC16F111A2008FAF7A /* DAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DAViewController.h; sourceTree = "<group>"; };
 		184AABAD16F111A2008FAF7A /* DAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DAViewController.m; sourceTree = "<group>"; };
@@ -54,6 +49,7 @@
 		18D0B5851764B19F00F8A399 /* TreeTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeTable.m; sourceTree = "<group>"; };
 		18D9FD80176BCB1900DD10F4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		18F5690A176937F400D1411A /* Easy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Easy.plist; sourceTree = "<group>"; };
+		1E91D29118A008C700A02542 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,9 +82,9 @@
 		184AAB8216F111A2008FAF7A = {
 			isa = PBXGroup;
 			children = (
+				184AABB816F12AFF008FAF7A /* Res */,
 				18D0B5831764B19F00F8A399 /* TreeTable */,
 				184AAB9416F111A2008FAF7A /* TreeViewExample */,
-				184AABB816F12AFF008FAF7A /* Res */,
 				184AAB8D16F111A2008FAF7A /* Frameworks */,
 				184AAB8C16F111A2008FAF7A /* Products */,
 			);
@@ -122,6 +118,7 @@
 				184AAB9E16F111A2008FAF7A /* DAAppDelegate.m */,
 				184AAB9A16F111A2008FAF7A /* main.m */,
 				184AAB9C16F111A2008FAF7A /* TreeViewExample-Prefix.pch */,
+				1E91D29118A008C700A02542 /* Images.xcassets */,
 			);
 			path = TreeViewExample;
 			sourceTree = "<group>";
@@ -132,9 +129,6 @@
 				182CDA2C16F49F4F00DD8B1A /* Github-ICON */,
 				184AAB9616F111A2008FAF7A /* TreeViewExample-Info.plist */,
 				184AAB9716F111A2008FAF7A /* InfoPlist.strings */,
-				184AABA016F111A2008FAF7A /* Default.png */,
-				184AABA216F111A2008FAF7A /* Default@2x.png */,
-				184AABA416F111A2008FAF7A /* Default-568h@2x.png */,
 			);
 			name = Res;
 			sourceTree = "<group>";
@@ -220,14 +214,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				184AAB9916F111A2008FAF7A /* InfoPlist.strings in Resources */,
-				184AABA116F111A2008FAF7A /* Default.png in Resources */,
-				184AABA316F111A2008FAF7A /* Default@2x.png in Resources */,
-				184AABA516F111A2008FAF7A /* Default-568h@2x.png in Resources */,
 				184AABA816F111A2008FAF7A /* Main_iPhone.storyboard in Resources */,
 				182CDA2A16F49C0F00DD8B1A /* Main_iPad.storyboard in Resources */,
 				182CDA3316F49F4F00DD8B1A /* Icon-72.png in Resources */,
 				182CDA3416F49F4F00DD8B1A /* Icon-72@2x.png in Resources */,
 				182CDA3516F49F4F00DD8B1A /* Icon.png in Resources */,
+				1E91D29218A008C700A02542 /* Images.xcassets in Resources */,
 				182CDA3616F49F4F00DD8B1A /* Icon@2x.png in Resources */,
 				18F5690B176937FE00D1411A /* Easy.plist in Resources */,
 			);
@@ -331,6 +323,8 @@
 		184AABB216F111A2008FAF7A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TreeViewExample/TreeViewExample-Prefix.pch";
 				INFOPLIST_FILE = "TreeViewExample/TreeViewExample-Info.plist";
@@ -344,6 +338,8 @@
 		184AABB316F111A2008FAF7A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TreeViewExample/TreeViewExample-Prefix.pch";
 				INFOPLIST_FILE = "TreeViewExample/TreeViewExample-Info.plist";

@@ -14,15 +14,14 @@
 @end
 
 
-@interface TreeTable : NSObject <UITableViewDataSource>
+@class TreeTable;
 
-@property (weak, nonatomic, readonly) UITableView *tableView;
-@property (weak, nonatomic) IBOutlet id<TreeTableDataSource> dataSource;
-@property (nonatomic) UITableViewRowAnimation expandingAnimation, closingAnimation;
+@interface UITableView (TreeTable)
+@property (weak, nonatomic, readonly) TreeTable *treeProxy;
 
 - (void)expand:(NSIndexPath *)indexPath;
 - (BOOL)isExpanded:(NSIndexPath *)indexPath;
-- (void)close:(NSIndexPath *)indexPath;
+- (void)collapse:(NSIndexPath *)indexPath;
 - (NSArray *)siblings:(NSIndexPath *)indexPath;
 - (NSIndexPath *)parent:(NSIndexPath *)indexPath;
 
@@ -46,3 +45,9 @@
 - (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)indexPath;
 @end
 
+
+@interface TreeTable : NSObject <UITableViewDataSource>
+@property (weak, nonatomic, readonly) UITableView *tableView;
+@property (weak, nonatomic) IBOutlet id<TreeTableDataSource> dataSource;
+@property (nonatomic) UITableViewRowAnimation expandingAnimation, closingAnimation;
+@end

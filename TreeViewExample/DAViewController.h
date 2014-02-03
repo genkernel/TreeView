@@ -8,7 +8,7 @@
 
 #import "TreeTable.h"
 
-@interface DAViewController : UIViewController <UITableViewDelegate>
+@interface DAViewController : UIViewController
 @property (strong, nonatomic) IBOutlet TreeTable *treeModel;
 
 @property (strong, nonatomic) IBOutlet UITableView *treeView;

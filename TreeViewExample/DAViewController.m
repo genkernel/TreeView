@@ -11,7 +11,7 @@
 static NSString *Subitems = @"Subitems";
 static NSString *Title = @"Title";
 
-@interface DAViewController ()
+@interface DAViewController () <UITableViewDelegate, TreeTableDataSource>
 // <indexPath> => @(YES) or nil.
 @property (strong, nonatomic, readonly) NSMutableDictionary *expandedItems;
 @property (strong, nonatomic, readonly) NSArray *easy;
@@ -19,11 +19,10 @@ static NSString *Title = @"Title";
 
 @implementation DAViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
-	_expandedItems = NSMutableDictionary.dictionary;
+	_expandedItems = @{}.mutableCopy;
 	
 	NSString *path = [NSBundle.mainBundle pathForResource:@"Easy" ofType:@"plist"];
 	_easy = [NSArray arrayWithContentsOfFile:path];
@@ -58,7 +57,7 @@ static NSString *Title = @"Title";
 	return self.easy.count;
 }
 
-- (BOOL)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSDictionary *item = self.easy[section];
 	return [item[Subitems] count];
 }
@@ -106,12 +105,12 @@ static NSString *Title = @"Title";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)tableIndexPath {
 	[tableView deselectRowAtIndexPath:tableIndexPath animated:YES];
 	
-	NSIndexPath *treeIndexPath = [self.treeModel treeIndexPathFromTablePath:tableIndexPath];
+	NSIndexPath *treeIndexPath = [tableView treeIndexPathFromTablePath:tableIndexPath];
 	
-	BOOL isExpanded = [self.treeModel isExpanded:treeIndexPath];
+	BOOL isExpanded = [tableView isExpanded:treeIndexPath];
 	if (isExpanded) {
 		[self.expandedItems removeObjectForKey:treeIndexPath];
-		[self.treeModel close:treeIndexPath];
+		[tableView collapse:treeIndexPath];
 	} else {
 		NSDictionary *item = [self itemForIndexPath:treeIndexPath];
 		if ([item isKindOfClass:NSString.class]) {
@@ -119,7 +118,7 @@ static NSString *Title = @"Title";
 		}
 		
 		self.expandedItems[treeIndexPath] = @(YES);
-		[self.treeModel expand:treeIndexPath];
+		[tableView expand:treeIndexPath];
 	}
 }
 
