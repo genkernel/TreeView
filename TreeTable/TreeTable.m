@@ -48,6 +48,14 @@
 
 #pragma mark UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	if ([self.dataSource respondsToSelector:@selector(numberOfSectionsInTableView:)]) {
+		return [self.dataSource numberOfSectionsInTableView:tableView];
+	}
+	
+	return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	_tableView = tableView;
 	
