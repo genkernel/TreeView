@@ -34,7 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	func filePathForIndexPath(ip: NSIndexPath) -> String {
 		var path = rootPath;
 	
-		for var i = 1; i < ip.length; i++ {
+		for i in 1 ..< ip.length {
 			let index = ip.indexAtPosition(i)
 			
 			let items = try! fm.contentsOfDirectoryAtPath(path)
