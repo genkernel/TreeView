@@ -1,3 +1,10 @@
+Swift notes
+---
+
+TreeView is written in Objective-C and fully compatibile with Swift.
+Check out [swift-example](https://github.com/genkernel/TreeView/tree/swift-example) branch to see how well it plays with Swift.
+
+
 TreeView
 ========
 
@@ -24,34 +31,34 @@ TreeView adds 2 logical states to every cell: <b>expanded</b> and <b>collapsed</
 You should expand cell to reveal its subcells.<br/>
 Keeping this in mind helper methods were implemented: <br/>
 <i>
-- (void)expand:(NSIndexPath *)indexPath;<br/>
-- (BOOL)isExpanded:(NSIndexPath *)indexPath;<br/>
-- (void)collapse:(NSIndexPath *)indexPath;<br/>
+- (void)expand:(NSIndexPath *)treeIndexPath;<br/>
+- (BOOL)isExpanded:(NSIndexPath *)treeIndexPath;<br/>
+- (void)collapse:(NSIndexPath *)treeIndexPath;<br/>
 </i>
 
-Instead of implementing <b>UITableViewDataSource</b> in your controller - change it to <b>TreeTableDataSource</b>. TreeTableDataSource protocol inherits UITableViewDataSource and introduces 2 new methods:<br/>
+Instead of implementing <b>UITableViewDataSource</b> in your controller - change it to <b>TreeTableDataSource</b>. TreeTableDataSource protocol extends UITableViewDataSource by introducing 2 new methods:<br/>
 <i>
 @required <br/>
-- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath;<br/>
-- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)treeIndexPath;<br/>
+- (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)treeIndexPath;
 </i>
 
 Notice all @required dataSource methods are invoked with indexPath of N-depth that uniquely identify cell or subcell.<br/>
 Hence you should change behaviour of the following methods:
 <i>
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)treeIndexPath;
 </i>
 
-use 
-<i>- (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath
+and use 
+<i>- (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)treeIndexPath
 </i>
 if you need to convert N-depth index path into 2d index path.
 
 On the other hand all @optional methods are transparently forwarded to your implementations (if such exists) and indexPath parameter is not changed - it is 2d indexPath.
 You can convert it into N-depth indexPath with:
 <i>
-- (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)treeIndexPath;
 </i> 
 method.
 
