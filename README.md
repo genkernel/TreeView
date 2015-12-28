@@ -1,13 +1,19 @@
 TreeView
 ========
 
-Component that introduces cells + subcells support for any UITableView living there in controller's view.
+Component that introduces cells + subcells support for any UITableView living there in a controller's view.
 
-ExampleApp demo on Youtube: http://youtu.be/zS3gQ4pnmBs
+Example on Youtube: http://youtu.be/zS3gQ4pnmBs
 
-TreeView is a "proxy" object that converts 2d-like indexPaths (0-0, 0-1, ...)  into N-depth indexPaths (0-0, 0-0-1, 0-0-2, 0-1-0-1, ...).
+TreeView is a "proxy" object that sits between table view and a view controller, proxies all calls to data source and converts 2d-like indexPaths (0-0, 0-1, ...)  into N-depth indexPaths (0-0, 0-0-1, 0-0-2, 0-1-0-1, ...).
+
 
 You usually use TreeView component when your <b>UITableViewCell</b> wants to contain its own subcells that can be easily shown / hidden.<br />
+
+
+Examples
+---
+Take a look at 3 branches: [fsTree-example](https://github.com/genkernel/TreeView/tree/fsTree-example), [allExpanded-example](https://github.com/genkernel/TreeView/tree/allExpanded-example) and [plistDatasource-example](https://github.com/genkernel/TreeView/tree/plistDatasource-example) to get inside view on how to implement subcells support for a table view.
 
 
 Implementation details
@@ -20,7 +26,7 @@ Keeping this in mind helper methods were implemented: <br/>
 <i>
 - (void)expand:(NSIndexPath *)indexPath;<br/>
 - (BOOL)isExpanded:(NSIndexPath *)indexPath;<br/>
-- (void)close:(NSIndexPath *)indexPath;<br/>
+- (void)collapse:(NSIndexPath *)indexPath;<br/>
 </i>
 
 Instead of implementing <b>UITableViewDataSource</b> in your controller - change it to <b>TreeTableDataSource</b>. TreeTableDataSource protocol inherits UITableViewDataSource and introduces 2 new methods:<br/>
@@ -31,13 +37,18 @@ Instead of implementing <b>UITableViewDataSource</b> in your controller - change
 </i>
 
 Notice all @required dataSource methods are invoked with indexPath of N-depth that uniquely identify cell or subcell.<br/>
-Hence you should change behaviour of following method:
+Hence you should change behaviour of the following methods:
 <i>
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 </i>
-and ensure that it fills every cell with appropriate data.
 
-On the other hand all @optional methods are transparently forwarded to your implementations (if such exist) and indexPath parameter is unchanged - it is 2d indexPath.
+use 
+<i>- (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath
+</i>
+if you need to convert N-depth index path into 2d index path.
+
+On the other hand all @optional methods are transparently forwarded to your implementations (if such exists) and indexPath parameter is not changed - it is 2d indexPath.
 You can convert it into N-depth indexPath with:
 <i>
 - (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)indexPath;
