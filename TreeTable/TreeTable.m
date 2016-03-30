@@ -97,7 +97,7 @@
 
 - (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)indexPath {
 	NSUInteger row = [self rowOffsetForIndexPath:indexPath];
-	return [NSIndexPath indexPathForRow:row inSection:0];
+	return [NSIndexPath indexPathForRow:row inSection:indexPath.section];
 }
 
 /**
