@@ -30,38 +30,48 @@ TreeView adds 2 logical states to every cell: <b>expanded</b> and <b>collapsed</
 
 You should expand cell to reveal its subcells.<br/>
 Keeping this in mind helper methods were implemented: <br/>
-<i>
-- (void)expand:(NSIndexPath *)treeIndexPath;<br/>
-- (BOOL)isExpanded:(NSIndexPath *)treeIndexPath;<br/>
-- (void)collapse:(NSIndexPath *)treeIndexPath;<br/>
-</i>
+```objectiveC
+- (void)expand:(NSIndexPath *)treeIndexPath;
+- (BOOL)isExpanded:(NSIndexPath *)treeIndexPath;
+- (void)collapse:(NSIndexPath *)treeIndexPath;
+```
 
 Instead of implementing <b>UITableViewDataSource</b> in your controller - change it to <b>TreeTableDataSource</b>. TreeTableDataSource protocol extends UITableViewDataSource by introducing 2 new methods:<br/>
-<i>
-@required <br/>
-- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)treeIndexPath;<br/>
+```objectiveC
+@required
+- (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)treeIndexPath;
 - (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)treeIndexPath;
-</i>
+```
 
 Notice all @required dataSource methods are invoked with indexPath of N-depth that uniquely identify cell or subcell.<br/>
 Hence you should change behaviour of the following methods:
-<i>
+```objectiveC
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)treeIndexPath;
-</i>
+```
 
 and use 
-<i>- (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)treeIndexPath
-</i>
+```objectiveC
+- (NSIndexPath *)tableIndexPathFromTreePath:(NSIndexPath *)treeIndexPath
+```
 if you need to convert N-depth index path into 2d index path.
 
 On the other hand all @optional methods are transparently forwarded to your implementations (if such exists) and indexPath parameter is not changed - it is 2d indexPath.
 You can convert it into N-depth indexPath with:
-<i>
+```objectiveC
 - (NSIndexPath *)treeIndexPathFromTablePath:(NSIndexPath *)treeIndexPath;
-</i> 
+```
 method.
 
+
+## Installation
+
+TreeView is available through [CocoaPods](http://cocoapods.org/pods/treeview). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'TreeView'
+```
 
 Conclusion
 ---
