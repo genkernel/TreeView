@@ -177,7 +177,7 @@
 	return count;
 }
 
-- (NSIndexPath *)treeIndexPathForItem:(UITableViewCell *)item {
+- (NSIndexPath *)treeIndexPathForCell:(UITableViewCell *)item {
 	NSIndexPath *tableIndexPath = [self indexPathForCell:item];
 	return [self treeIndexPathFromTablePath:tableIndexPath];
 }
@@ -244,7 +244,7 @@
 	return nil;
 }
 
-- (UITableViewCell *)itemForTreeIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)rowForTreeIndexPath:(NSIndexPath *)indexPath {
 	NSIndexPath *ip = [self tableIndexPathFromTreePath:indexPath];
 	return [self cellForRowAtIndexPath:ip];
 }
