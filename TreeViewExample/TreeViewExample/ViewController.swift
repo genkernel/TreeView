@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-	var expandedItems: Dictionary<NSIndexPath, Bool>!
+class ViewController: UIViewController, UITableViewDelegate, TreeTableDataSource {
 	
-	var fm: NSFileManager!
-	var rootPath: String!
-	var rootItems: NSArray!
+	let fm = FileManager.default
+	var rootPath = Bundle.main.bundlePath
+	
+	var rootItems: [String]!
+	var expandedItems: [IndexPath: Bool] = [:]
 	
 	@IBOutlet weak var treeView: UITableView!
 	
@@ -21,37 +22,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		super.viewDidLoad()
 		
 		expandedItems = [:]
-		
-		fm = NSFileManager.defaultManager()
-		
-		rootPath = NSBundle.mainBundle().bundlePath;
-		rootItems = try! fm.contentsOfDirectoryAtPath(rootPath)
+		rootItems = try! fm.contentsOfDirectory(atPath: rootPath)
 		
 		let identifier = NSStringFromClass(UITableViewCell.self)
-		treeView.registerClass(UITableViewCell.self, forCellReuseIdentifier: identifier)
+		treeView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
 	}
 	
-	func filePathForIndexPath(ip: NSIndexPath) -> String {
-		var path = rootPath;
+	func filePath(fromTreeIndexPath ip: IndexPath) -> String {
+		var path = rootPath
 	
-		for i in 1 ..< ip.length {
-			let index = ip.indexAtPosition(i)
+		for i in 1 ..< ip.count {
+			let items = try! fm.contentsOfDirectory(atPath: path)
 			
-			let items = try! fm.contentsOfDirectoryAtPath(path)
-			
-			path = (path as NSString).stringByAppendingPathComponent(items[index])
+			path = (path as NSString).appendingPathComponent(items[ip[i]])
 		}
 	
-		return path;
+		return path
 	}
 	
-	// MARK: - UITableViewDataSource
+	// MARK: - TreeTableDataSource
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return rootItems.count
 	}
 	
-	func tableView(tableView: UITableView, isCellExpanded indexPath: NSIndexPath) -> Bool {
+	func tableView(_ tableView: UITableView, isCellExpanded indexPath: IndexPath) -> Bool {
 		if let expanded = expandedItems[indexPath] {
 			return expanded
 		} else {
@@ -59,26 +54,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		}
 	}
 	
-	func tableView(tableView: UITableView, numberOfSubCellsForCellAtIndexPath indexPath: NSIndexPath) -> Int {
-		let filePath = filePathForIndexPath(indexPath)
+	func tableView(_ tableView: UITableView, numberOfSubCellsForCellAt treeIndexPath: IndexPath) -> UInt {
+		let filePath = self.filePath(fromTreeIndexPath: treeIndexPath)
 		
-		let paths = try! fm.contentsOfDirectoryAtPath(filePath)
-		
-		return paths.count
+		return UInt((try! fm.contentsOfDirectory(atPath: filePath)).count)
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let filePath = filePathForIndexPath(indexPath)
+	func tableView(_ tableView: UITableView, cellForRowAt treeIndexPath: IndexPath) -> UITableViewCell {
+		let tableIndexPath = tableView.tableIndexPath(fromTreePath: treeIndexPath)
 		
 		let identifier = NSStringFromClass(UITableViewCell.self)
-		let cell = tableView.dequeueReusableCellWithIdentifier(identifier)!
+		let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: tableIndexPath)
 		
-		cell.indentationLevel = indexPath.length - 1
+		cell.indentationLevel = treeIndexPath.count - 1
+		
+		let filePath = self.filePath(fromTreeIndexPath: treeIndexPath)
 		
 		var isDirectory = ObjCBool(false)
-		fm.fileExistsAtPath(filePath, isDirectory: &isDirectory)
+		fm.fileExists(atPath: filePath, isDirectory: &isDirectory)
 		
-		cell.accessoryType = isDirectory ? .DisclosureIndicator : .None
+		cell.accessoryType = isDirectory.boolValue ? .disclosureIndicator : .none
 		cell.textLabel?.text = (filePath as NSString).lastPathComponent
 		
 		return cell;
@@ -86,22 +81,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	// MARK: - UITableViewDelegate
 	
-	func tableView(tableView: UITableView, didSelectRowAtIndexPath tableIndexPath: NSIndexPath) {
-		tableView.deselectRowAtIndexPath(tableIndexPath, animated: true)
+	func tableView(_ tableView: UITableView, didSelectRowAt tableIndexPath: IndexPath) {
+		tableView.deselectRow(at: tableIndexPath, animated: true)
 		
-		let treeIndexPath = tableView.treeIndexPathFromTablePath(tableIndexPath)
+		let treeIndexPath = tableView.treeIndexPath(fromTablePath: tableIndexPath)
 		
 		if tableView.isExpanded(treeIndexPath) {
-			expandedItems.removeValueForKey(treeIndexPath)
+			let index = expandedItems.index(forKey: treeIndexPath)!
+			expandedItems.remove(at: index)
 			
 			tableView.collapse(treeIndexPath)
 		} else {
-			let filePath = filePathForIndexPath(treeIndexPath)
+			let filePath = self.filePath(fromTreeIndexPath: treeIndexPath)
 			
 			var isDirectory = ObjCBool(false)
-			fm.fileExistsAtPath(filePath, isDirectory: &isDirectory)
+			fm.fileExists(atPath: filePath, isDirectory: &isDirectory)
 			
-			if isDirectory {
+			if isDirectory.boolValue {
 				expandedItems[treeIndexPath] = true
 				
 				tableView.expand(treeIndexPath)
