@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TreeView'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
 
   s.platform     = :ios, '8.0'
   s.ios.deployment_target = '8.0'
@@ -23,4 +23,7 @@ proxies all calls to data source and converts 2d-like indexPaths (0-0, 0-1, ...)
   s.source           = { :git => 'https://github.com/genkernel/TreeView.git', :tag => s.version.to_s }
 
   s.source_files = "TreeTable/*.{h,m}"
+
+  s.swift_version = '4.2'
+  s.requires_arc = true
 end
