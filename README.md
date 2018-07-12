@@ -32,9 +32,9 @@ You should expand cell to reveal its subcells.<br/>
 
 Keeping this in mind helper methods(via UITableView category) were implemented: <br/>
 ```swift
-- func expand(treeIndexPath: IndexPath)<br/>
-- func isExpanded(treeIndexPath: IndexPath) -> Bool<br/>
-- func collapse(treeIndexPath: IndexPath)<br/>
+func expand(treeIndexPath: IndexPath)
+func isExpanded(treeIndexPath: IndexPath) -> Bool
+func collapse(treeIndexPath: IndexPath)
 ```
 
 Instead of implementing <b>UITableViewDataSource</b> in your controller - implement <b>TreeTableDataSource</b>. TreeTableDataSource protocol extends UITableViewDataSource by introducing 2 new required methods:<br/>
@@ -60,6 +60,7 @@ On the other hand all <b>optional</b> methods are transparently forwarded to you
 You can convert it into N-depth treeIndexPath with:
 ```swift
 func treeIndexPathFromTablePath(indexPath: NSIndexPath) -> NSIndexPath
+```
 method.
 
 
