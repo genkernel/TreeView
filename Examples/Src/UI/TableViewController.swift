@@ -23,7 +23,13 @@ final class TableViewController: UIViewController {
 		
 		title = treeModule.name
 		
+		// 1. TableView.dataSource -> TreeTable  |  TreeTable.dataSource -> TreeModule
 		treeTable.dataSource = treeModule
+		tableView.dataSource = treeTable
+		
+		// 2. TableView.delegate is directly treeModule.
+		tableView.delegate = treeModule
+		
 		treeModule.registerCustomCells(with: tableView)
 	}
 }

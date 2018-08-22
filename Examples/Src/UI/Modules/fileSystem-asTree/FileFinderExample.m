@@ -6,12 +6,13 @@
 //  Copyright (c) 2013 kernel@realm. All rights reserved.
 //
 
-#import "DAViewController.h"
+#import "FileFinderExample.h"
+#import "TreeViewExample-Swift.h"
 
 static NSString *Subitems = @"Subitems";
 static NSString *Title = @"Title";
 
-@interface DAViewController () <UITableViewDelegate, TreeTableDataSource>
+@interface FileFinderExample ()
 // <indexPath> => @(YES) or nil.
 @property (strong, nonatomic, readonly) NSMutableDictionary *expandedItems;
 
@@ -20,21 +21,28 @@ static NSString *Title = @"Title";
 @property (strong, nonatomic, readonly) NSArray *rootItems;
 @end
 
-@implementation DAViewController
+@implementation FileFinderExample
+@synthesize name = _name;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	_expandedItems = @{}.mutableCopy;
-	
+- (instancetype)init {
+	self = [super init];
+	if (self) {
+		_name = @"FileFinder (file system as a tree)";
+		
+		_expandedItems = @{}.mutableCopy;
+		_fm = NSFileManager.defaultManager;
+		
+		_rootPath = NSBundle.mainBundle.bundlePath;
+		_rootItems = [self.fm contentsOfDirectoryAtPath:self.rootPath error:nil];
+	}
+	return self;
+}
+
+- (void)registerCustomCellsWith:(UITableView *)tableView {
 	Class cls = UITableViewCell.class;
 	NSString *identifier =  NSStringFromClass(cls);
-	[self.treeView registerClass:cls forCellReuseIdentifier:identifier];
 	
-	_fm = NSFileManager.defaultManager;
-	
-	_rootPath = NSBundle.mainBundle.bundlePath;
-	_rootItems = [self.fm contentsOfDirectoryAtPath:self.rootPath error:nil];
+	[tableView registerClass:cls forCellReuseIdentifier:identifier];
 }
 
 - (NSString *)filePathForIndexPath:(NSIndexPath *)ip {

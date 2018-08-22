@@ -11,7 +11,9 @@ import UIKit
 final class SelectViewController: UITableViewController {
 	
 	let modules: [TreeModule] = [
-		SwiftExample()
+		SwiftExample(),
+		PListExample(),
+		FileFinderExample()
 	]
 	
 	// Names correspond to constants in Storyboard.
@@ -31,7 +33,7 @@ final class SelectViewController: UITableViewController {
 		case .showModuleScreen:
 			let ctrl = segue.destination as! TableViewController
 			
-			ctrl.treeModule = sender as! TreeModule
+			ctrl.treeModule = sender as? TreeModule
 		}
 	}
 	

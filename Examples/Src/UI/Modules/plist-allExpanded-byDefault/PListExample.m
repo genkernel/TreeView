@@ -6,30 +6,39 @@
 //  Copyright (c) 2013 kernel@realm. All rights reserved.
 //
 
-#import "DAViewController.h"
+#import "PListExample.h"
+#import "TreeViewExample-Swift.h"
 
 static NSString *Subitems = @"Subitems";
 static NSString *Title = @"Title";
 
-@interface DAViewController () <UITableViewDelegate, TreeTableDataSource>
+@interface PListExample ()
 // <indexPath> => @(YES) or nil.
 @property (strong, nonatomic, readonly) NSMutableDictionary *expandedItems;
 @property (strong, nonatomic, readonly) NSArray *easy;
 @end
 
-@implementation DAViewController
+@implementation PListExample
+@synthesize name = _name;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	_expandedItems = @{}.mutableCopy;
-	
-	NSString *path = [NSBundle.mainBundle pathForResource:@"Easy" ofType:@"plist"];
-	_easy = [NSArray arrayWithContentsOfFile:path];
-	
+- (instancetype)init {
+	self = [super init];
+	if (self) {
+		_name = @"PList example (all cells expanded by default)";
+		
+		_expandedItems = NSMutableDictionary.dictionary;
+		
+		NSString *path = [NSBundle.mainBundle pathForResource:@"Easy" ofType:@"plist"];
+		_easy = [NSArray arrayWithContentsOfFile:path];
+	}
+	return self;
+}
+
+- (void)registerCustomCellsWith:(UITableView *)tableView {
 	Class cls = UITableViewCell.class;
 	NSString *identifier =  NSStringFromClass(cls);
-	[self.treeView registerClass:cls forCellReuseIdentifier:identifier];
+	
+	[tableView registerClass:cls forCellReuseIdentifier:identifier];
 }
 
 - (NSDictionary *)itemForIndexPath:(NSIndexPath *)indexPath {
@@ -57,18 +66,29 @@ static NSString *Title = @"Title";
 	return self.easy.count;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	NSDictionary *item = self.easy[section];
+	
+	return item[Title];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSDictionary *item = self.easy[section];
 	return [item[Subitems] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	NSDictionary *item = self.easy[section];
-	return item[Title];
-}
-
 - (BOOL)tableView:(UITableView *)tableView isCellExpanded:(NSIndexPath *)indexPath {
-	return nil != self.expandedItems[indexPath];
+	NSDictionary *item = [self itemForIndexPath:indexPath];
+	
+	NSNumber *initialState = self.expandedItems[indexPath];
+	BOOL isInitialStateUndefined = !initialState;
+	
+	if (isInitialStateUndefined && [item isKindOfClass:NSDictionary.class]) {
+		self.expandedItems[indexPath] = @(YES);
+		return [item[Subitems] count] > 0;
+	}
+	
+	return initialState.boolValue;
 }
 
 - (NSUInteger)tableView:(UITableView *)tableView numberOfSubCellsForCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,7 +129,8 @@ static NSString *Title = @"Title";
 	
 	BOOL isExpanded = [tableView isExpanded:treeIndexPath];
 	if (isExpanded) {
-		[self.expandedItems removeObjectForKey:treeIndexPath];
+		self.expandedItems[treeIndexPath] = @(NO);
+		
 		[tableView collapse:treeIndexPath];
 	} else {
 		NSDictionary *item = [self itemForIndexPath:treeIndexPath];

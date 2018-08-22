@@ -11,12 +11,13 @@
 		1E0DDD69212CF73400F4A708 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0DDD54212CF73400F4A708 /* LaunchScreen.storyboard */; };
 		1E0DDD6A212CF73400F4A708 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0DDD55212CF73400F4A708 /* Main.storyboard */; };
 		1E0DDD6B212CF73400F4A708 /* SwiftExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD59212CF73400F4A708 /* SwiftExample.swift */; };
-		1E0DDD6C212CF73400F4A708 /* Easy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0DDD5C212CF73400F4A708 /* Easy.plist */; };
-		1E0DDD6F212CF73400F4A708 /* Easy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0DDD63212CF73400F4A708 /* Easy.plist */; };
 		1E0DDD71212CF73400F4A708 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD66212CF73400F4A708 /* AppDelegate.swift */; };
 		1E0DDD73212CF85300F4A708 /* SelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD72212CF85300F4A708 /* SelectViewController.swift */; };
 		1E0DDD77212CFFFC00F4A708 /* TreeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD76212CFFFC00F4A708 /* TreeModule.swift */; };
+		1EACDC3D212DC07B00CE2C13 /* FileFinderExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD61212CF73400F4A708 /* FileFinderExample.m */; };
 		1EB7B6741BED5F6F00B8A333 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EB7B6731BED5F6F00B8A333 /* Assets.xcassets */; };
+		1EE147FE212DB36F0061E572 /* Easy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0DDD63212CF73400F4A708 /* Easy.plist */; };
+		1EE147FF212DB39C0061E572 /* PListExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E0DDD5E212CF73400F4A708 /* PListExample.m */; };
 		82AD016D237C44A41E88D879 /* Pods_TreeViewExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F60B7ED6E3F562DA954D17F4 /* Pods_TreeViewExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,20 +26,18 @@
 		1E0DDD54212CF73400F4A708 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E0DDD55212CF73400F4A708 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		1E0DDD59212CF73400F4A708 /* SwiftExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftExample.swift; sourceTree = "<group>"; };
-		1E0DDD5C212CF73400F4A708 /* Easy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Easy.plist; sourceTree = "<group>"; };
-		1E0DDD5D212CF73400F4A708 /* DAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAViewController.h; sourceTree = "<group>"; };
-		1E0DDD5E212CF73400F4A708 /* DAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAViewController.m; sourceTree = "<group>"; };
-		1E0DDD60212CF73400F4A708 /* DAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAViewController.h; sourceTree = "<group>"; };
-		1E0DDD61212CF73400F4A708 /* DAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAViewController.m; sourceTree = "<group>"; };
+		1E0DDD5D212CF73400F4A708 /* PListExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PListExample.h; sourceTree = "<group>"; };
+		1E0DDD5E212CF73400F4A708 /* PListExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PListExample.m; sourceTree = "<group>"; };
+		1E0DDD60212CF73400F4A708 /* FileFinderExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileFinderExample.h; sourceTree = "<group>"; };
+		1E0DDD61212CF73400F4A708 /* FileFinderExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileFinderExample.m; sourceTree = "<group>"; };
 		1E0DDD63212CF73400F4A708 /* Easy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Easy.plist; sourceTree = "<group>"; };
-		1E0DDD64212CF73400F4A708 /* DAViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAViewController.h; sourceTree = "<group>"; };
-		1E0DDD65212CF73400F4A708 /* DAViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAViewController.m; sourceTree = "<group>"; };
 		1E0DDD66212CF73400F4A708 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E0DDD72212CF85300F4A708 /* SelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectViewController.swift; sourceTree = "<group>"; };
 		1E0DDD76212CFFFC00F4A708 /* TreeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModule.swift; sourceTree = "<group>"; };
 		1EB7B6691BED5F6F00B8A333 /* TreeViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TreeViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EB7B6731BED5F6F00B8A333 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EB7B6781BED5F6F00B8A333 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1EE14800212DB5BA0061E572 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
 		928253F9BFF2B4DC2CC9D7AA /* Pods-TreeViewExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeViewExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-TreeViewExample/Pods-TreeViewExample.release.xcconfig"; sourceTree = "<group>"; };
 		D02CA5F3586DF942CB947331 /* Pods-TreeViewExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TreeViewExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TreeViewExample/Pods-TreeViewExample.debug.xcconfig"; sourceTree = "<group>"; };
 		F60B7ED6E3F562DA954D17F4 /* Pods_TreeViewExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TreeViewExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				1E0DDD66212CF73400F4A708 /* AppDelegate.swift */,
+				1EE14800212DB5BA0061E572 /* Bridge.h */,
 				1E0DDD52212CF73400F4A708 /* UI */,
 			);
 			path = Src;
@@ -91,9 +91,8 @@
 			children = (
 				1E0DDD76212CFFFC00F4A708 /* TreeModule.swift */,
 				1E0DDD58212CF73400F4A708 /* inSwift-4.2 */,
-				1E0DDD5B212CF73400F4A708 /* allExpanded-byDefault */,
+				1E0DDD5B212CF73400F4A708 /* plist-allExpanded-byDefault */,
 				1E0DDD5F212CF73400F4A708 /* fileSystem-asTree */,
-				1E0DDD62212CF73400F4A708 /* plist-dataSource */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -106,33 +105,23 @@
 			path = "inSwift-4.2";
 			sourceTree = "<group>";
 		};
-		1E0DDD5B212CF73400F4A708 /* allExpanded-byDefault */ = {
+		1E0DDD5B212CF73400F4A708 /* plist-allExpanded-byDefault */ = {
 			isa = PBXGroup;
 			children = (
-				1E0DDD5C212CF73400F4A708 /* Easy.plist */,
-				1E0DDD5D212CF73400F4A708 /* DAViewController.h */,
-				1E0DDD5E212CF73400F4A708 /* DAViewController.m */,
+				1E0DDD63212CF73400F4A708 /* Easy.plist */,
+				1E0DDD5D212CF73400F4A708 /* PListExample.h */,
+				1E0DDD5E212CF73400F4A708 /* PListExample.m */,
 			);
-			path = "allExpanded-byDefault";
+			path = "plist-allExpanded-byDefault";
 			sourceTree = "<group>";
 		};
 		1E0DDD5F212CF73400F4A708 /* fileSystem-asTree */ = {
 			isa = PBXGroup;
 			children = (
-				1E0DDD60212CF73400F4A708 /* DAViewController.h */,
-				1E0DDD61212CF73400F4A708 /* DAViewController.m */,
+				1E0DDD60212CF73400F4A708 /* FileFinderExample.h */,
+				1E0DDD61212CF73400F4A708 /* FileFinderExample.m */,
 			);
 			path = "fileSystem-asTree";
-			sourceTree = "<group>";
-		};
-		1E0DDD62212CF73400F4A708 /* plist-dataSource */ = {
-			isa = PBXGroup;
-			children = (
-				1E0DDD63212CF73400F4A708 /* Easy.plist */,
-				1E0DDD64212CF73400F4A708 /* DAViewController.h */,
-				1E0DDD65212CF73400F4A708 /* DAViewController.m */,
-			);
-			path = "plist-dataSource";
 			sourceTree = "<group>";
 		};
 		1EB7B6601BED5F6F00B8A333 = {
@@ -234,9 +223,8 @@
 			files = (
 				1E0DDD6A212CF73400F4A708 /* Main.storyboard in Resources */,
 				1E0DDD69212CF73400F4A708 /* LaunchScreen.storyboard in Resources */,
+				1EE147FE212DB36F0061E572 /* Easy.plist in Resources */,
 				1EB7B6741BED5F6F00B8A333 /* Assets.xcassets in Resources */,
-				1E0DDD6C212CF73400F4A708 /* Easy.plist in Resources */,
-				1E0DDD6F212CF73400F4A708 /* Easy.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,10 +275,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E0DDD71212CF73400F4A708 /* AppDelegate.swift in Sources */,
+				1EE147FF212DB39C0061E572 /* PListExample.m in Sources */,
 				1E0DDD77212CFFFC00F4A708 /* TreeModule.swift in Sources */,
 				1E0DDD68212CF73400F4A708 /* TableViewController.swift in Sources */,
 				1E0DDD73212CF85300F4A708 /* SelectViewController.swift in Sources */,
 				1E0DDD6B212CF73400F4A708 /* SwiftExample.swift in Sources */,
+				1EACDC3D212DC07B00CE2C13 /* FileFinderExample.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +404,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79Q5K765J7;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Res/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -422,8 +414,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.reimplement.treeview.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = Src/Bridge.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = arm64;
 			};
@@ -436,6 +429,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 79Q5K765J7;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Res/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -444,7 +439,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = mobi.reimplement.treeview.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = Src/Bridge.h;
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
 				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = arm64;
 			};

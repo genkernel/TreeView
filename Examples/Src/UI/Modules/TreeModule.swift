@@ -9,6 +9,7 @@
 import Foundation
 import TreeView
 
+@objc
 protocol TreeModule: TreeTableDataSource, UITableViewDelegate {
 	var name: String { get }
 	
