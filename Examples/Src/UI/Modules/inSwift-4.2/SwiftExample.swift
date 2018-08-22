@@ -2,42 +2,27 @@
 //  ViewController.swift
 //  TreeViewExample
 //
-//  Created by Altukhov Anton on 07.11.15.
+//  Created by Anthony on 07.11.15.
 //  Copyright © 2015 ReImpl. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, TreeTableDataSource {
+
+final class SwiftExample: NSObject, TreeModule {
+	let name: String = "inSwift-4.2"
 	
-	let fm = FileManager.default
-	var rootPath = Bundle.main.bundlePath
-	
-	var rootItems: [String]!
-	var expandedItems: [IndexPath: Bool] = [:]
-	
-	@IBOutlet weak var treeView: UITableView!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
+	override init() {
 		expandedItems = [:]
 		rootItems = try! fm.contentsOfDirectory(atPath: rootPath)
 		
-		let identifier = NSStringFromClass(UITableViewCell.self)
-		treeView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
+		super.init()
 	}
 	
-	func filePath(fromTreeIndexPath ip: IndexPath) -> String {
-		var path = rootPath
-	
-		for i in 1 ..< ip.count {
-			let items = try! fm.contentsOfDirectory(atPath: path)
-			
-			path = (path as NSString).appendingPathComponent(items[ip[i]])
-		}
-	
-		return path
+	func registerCustomCells(with tableView: UITableView) {
+		let identifier = NSStringFromClass(UITableViewCell.self)
+		
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
 	}
 	
 	// MARK: - TreeTableDataSource
@@ -104,5 +89,24 @@ class ViewController: UIViewController, UITableViewDelegate, TreeTableDataSource
 			}
 		}
 	}
+	
+	// MARK: - Internal
+	
+	private let fm = FileManager.default
+	private var rootPath = Bundle.main.bundlePath
+	
+	private var rootItems: [String]!
+	private var expandedItems: [IndexPath: Bool] = [:]
+	
+	private func filePath(fromTreeIndexPath ip: IndexPath) -> String {
+		var path = rootPath
+		
+		for i in 1 ..< ip.count {
+			let items = try! fm.contentsOfDirectory(atPath: path)
+			
+			path = (path as NSString).appendingPathComponent(items[ip[i]])
+		}
+		
+		return path
+	}
 }
-

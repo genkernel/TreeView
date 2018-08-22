@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  TreeViewExample
 //
-//  Created by Altukhov Anton on 07.11.15.
+//  Created by Anthony on 07.11.15.
 //  Copyright © 2015 ReImpl. All rights reserved.
 //
 
