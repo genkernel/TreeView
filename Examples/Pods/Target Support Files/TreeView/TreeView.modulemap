@@ -1,0 +1,6 @@
+framework module TreeView {
+  umbrella header "TreeView-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,16 @@
+PODS:
+  - TreeView (1.1.3)
+
+DEPENDENCIES:
+  - TreeView (from `../`)
+
+EXTERNAL SOURCES:
+  TreeView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TreeView: c76ffa95d0d9267cb78cd926d7cd6eeda6657216
+
+PODFILE CHECKSUM: d28dc412c1892263aec1c60ba4ffe521c0a42020
+
+COCOAPODS: 1.5.3
